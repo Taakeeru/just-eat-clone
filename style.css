@@ -127,10 +127,15 @@ header span {
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
     0 2px 6px 2px rgba(60, 64, 67, 0.149);
     cursor: pointer;
+    min-height: 119px;
 }
 
 .card:hover {
     background-color: rgb(245,245,245);
+}
+
+.card-info {
+    width: 100%;
 }
 
 .card img {
@@ -181,6 +186,10 @@ header span {
     height: 100vh;
     padding-top: 65px;
     background-color: white;
+}
+
+.basket-container img {
+    height: 30px;
 }
 
 .basket-text {
