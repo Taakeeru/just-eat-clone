@@ -3,7 +3,6 @@ body {
     margin: 0;
     font-family: "Poppins", sans-serif;
 }
-
 /* border: 1px solid rgba(0, 0, 0, 0.2); */
 /* END of Main-Settings */
 
@@ -12,7 +11,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100vw;
+    width: 100%;
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
     0 2px 6px 2px rgba(60, 64, 67, 0.149);
     z-index: 99;
@@ -63,12 +62,18 @@ header span {
 
 /* START of Hero-Container */
 .hero-container {
-    height: 150vh;
+    height: 50vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-right: 360px;
     padding-top: 65px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149);
+}
+
+.hero-container h2 {
+    margin-top: 10px;
 }
 
 .hero-img-div {
@@ -88,6 +93,11 @@ header span {
     margin: 0 15px 0 15px;
 }
 
+.info-box-text {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
 .r-logo {
     background-color: white;
     border-radius: 10px;
@@ -96,7 +106,67 @@ header span {
     0 2px 6px 2px rgba(60, 64, 67, 0.149);
     padding: 5px;
 }
+/* END of Hero-Container */
 
+/* START of Main-Container(JavaScript) */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    padding-right: 360px;
+    align-items: center;
+    background-color: rgb(252,252,252);
+    margin-top: 4px;
+}
+
+.card {
+    display: flex;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 15px;
+    max-width: 950px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 2px 6px 2px rgba(60, 64, 67, 0.149);
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: rgb(245,245,245);
+}
+
+.card img {
+    height: 25px;
+    width: 25px;
+}
+
+.card h3 {
+    margin: 0 0 5px 0;
+}
+
+.card span {
+    margin: 0;
+    font-size: 14px;
+}
+
+.card p {
+    margin: 5px 0 10px 0 ;
+    font-size: 12px;
+}
+
+.card h4 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.card-button button {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    padding: 5px;
+}
+/* END of Main-Container(JavaScript) */
+
+/* START of Basket-Container(JavaScript) */
 .basket-container {
     display: flex;
     flex-direction: column;
@@ -116,5 +186,4 @@ header span {
 .basket-text {
     text-align: center;
 }
-
-/* END of Hero-Container */
+/* END of Basket-Container(JavaScript) */
