@@ -3,13 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dumplings</title>
+    <title>House of Momos</title>
+    <link rel="shortcut icon" href="./img/icons/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="fonts.css">
     <script src="script.js"></script>
 
 </head>
-<body>
+<body onload="renderMenu()">
+    <header>
+        <div><a href="#"><img src="./img/icons/logo.svg" alt="Logo Bild"><h1>Just Eat</h1></a></div>
+        <div><span>Speisekarte</span></div>
+        <div class="header-icons"><img src="./img/icons/swiss.png" alt="Sprache Bild"><img class="resize" src="./img/seck.jpg" alt="Profil Bild"><img src="./img/icons/menu.svg" alt="Menü Bild"></div>
+    </header>
+
     
+    <div class="hero-container">
+        <div class="hero-img-div"><img class="hero-img" src="./img/momos.jpg" alt="Produkt Bild"></div>
+        <div class="info-box">
+            <div class="logo-box"><img class="r-logo" src="./img/icons/logo-momo.png" alt="Restaurant Logo"></div>
+            <div><h2>House of Momos</h2></div>
+            <div><img src="./img/bewertung.PNG" alt="Bewertungen Bild"></div>
+            <div><span>Bei diesem Restaurant kannst du Stempel sammeln. Stelle beim Bestellabschluss bitte sicher, dass du dich für unseren Newsletter angemeldet hast, um<br>deine Stempel per E-Mail zu erhalten.</span></div>
+            <div><span>Fleischdeklaration:<br>Poulet: Schweiz<br>Rind: Schweiz</span></div>
+        </div>
+    </div>
+    
+    <div class="basket-container">
+        <div><h2>Warenkorb</h2></div>
+        <div><img src="./img/icons/bag.png" alt=""></div>
+        <div><h2>Fülle deinen Warenkorb</h2></div>
+        <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div>
+    </div>
 </body>
 </html>
