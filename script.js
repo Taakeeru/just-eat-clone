@@ -131,10 +131,14 @@ function save() {
 
 
 function load() {
-  let postsAsText = localStorage.getItem('posts');
+  let menuItemsAsText = localStorage.getItem('menuItems');
+  let basketItemsAsText = localStorage.getItem('basketItems');
 
-  if (postsAsText) {
-    posts = JSON.parse(postsAsText); 
+  if (menuItemsAsText) {
+    menuItems = JSON.parse(menuItemsAsText); 
+  }
+  if (basketItemsAsText) {
+    basketItems = JSON.parse(basketItemsAsText); 
   }
 }
 
@@ -155,13 +159,14 @@ function menuTemplate(index, MENU) {
 
 
 function basketTemplate(index) {
-  return /* html */ ``
+  return /* html */ `<div><h2>Warenkorb</h2></div>
+  `
 }
 
 
 function emptyBasketTemplate() {
   return /* html */ `<div><h2>Warenkorb</h2></div>
   <div><img src="./img/icons/bag.png" alt=""></div>
-  <div><h2>Fülle deinen Warenkorb</h2></div>
+  <div><h3>Fülle deinen Warenkorb</h3></div>
   <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div>`
 }
