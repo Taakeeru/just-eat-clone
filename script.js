@@ -59,65 +59,35 @@ function renderMenu() {
 
 
 function renderBasket() {
-  let basketContent = document.getElementById("basket");
-  basketContent.innerHTML = "";
-
+  let basketCard = document.getElementById('basketcard');
+  
   for (let i = 0; i < basketItems.length; i++) {
     const BASKET = basketItems[i];
 
-    checkBasket(i, BASKET);
+    basketCard.innerHTML += basketCardTemplate(i, BASKET);
+    // checkBasket(i, BASKET);
   }
 }
 
 
-function checkBasket(index, BASKET) {
+function checkBasket() {
   let basketContent = document.getElementById("basket");
+  
 
-  if (basketItems !== '') {
-    basketContent.innerHTML += basketTemplate(index, BASKET);
-  } else {
+  if (basketItems == '') {
+    basketContent.innerHTML = "";
     basketContent.innerHTML += emptyBasketTemplate();
-  }
-}
-
-
-function getValueFromInput(inputId) {
-  let input = document.getElementById(inputId);
-  return input.value.trim();
-}
-
-
-function getMenuFromInput() {
-  return getValueFromInput("menu");
-}
-
-
-function getPriceFromInput() {
-  let priceInput = getValueFromInput("price");
-  return parseFloat(priceInput);
-}
-
-
-function onAddMenu() {
-  let menu = getMenuFromInput();
-  let price = getPriceFromInput();
-  let index = getMenuIndex(menu);
-
-  if (index !== "not in the json") {
-    menuItems[index].amount += 1;
   } else {
-    menuItems.push({ menu, price, amount: 1 });
+    basketContent.innerHTML = "";
+    basketContent.innerHTML += basketTemplate();
   }
+  renderBasket();
 }
 
 
-function getMenuIndex(menu) {
-  for (let i = 0; i < menuItems.length; i++) {
-    if (menuItems[i].menu === menu) {
-      return i;
-    }
-  }
-  return "not in the json";
+function addToBasket(i) {
+  basketItems.push(menuItems[i])
+  checkBasket();
 }
 
 
@@ -144,7 +114,7 @@ function load() {
 
 
 function menuTemplate(index, MENU) {
-  return /* html */ `<div class="card" id='card${index}'>
+  return /* html */ `<div class="card" id='card${index}' onclick="addToBasket(${index})">
   <div class="card-info">
       <div><h3>${MENU['menu']}</h3></div>
       <div><span>${MENU['description']}</span></div>
@@ -158,15 +128,77 @@ function menuTemplate(index, MENU) {
 }
 
 
-function basketTemplate(index) {
-  return /* html */ `<div><h2>Warenkorb</h2></div>
-  `
+function basketCardTemplate(index, BASKET) {
+  return /* html */`
+  <div class="basket-card" id="basketcard${index}">
+    <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price']}</span></div></div>
+    <div class="basket-description"><span>Kleine Portion (5 Stück), Hausgemachte Chilisauce</span></div>
+    <div class="card-buttons-div"><button><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>1</span><button><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
+  </div>`
+}
+
+
+function basketTemplate() {
+  return /* html */ `
+  <div class="basket-cards" id="basketcards">
+      <div class="basket-card" id="basketcard">
+          
+      </div>
+  </div>
+  <div class="basket-sums">
+      <div><span>Zwischensumme</span><span>40,00 CHF</span></div>
+      <div><span>Lieferkosten</span><span>5,90 CHF</span></div>
+      <div><p>Gesamt</p><p>182,50 CHF</p></div>
+  </div>
+  <div class="basket-button-div"><button class="basket-button" id="basketbutton">Bezahlen (182,50 CHF)</button></div>`
 }
 
 
 function emptyBasketTemplate() {
-  return /* html */ `<div><h2>Warenkorb</h2></div>
-  <div><img src="./img/icons/bag.png" alt=""></div>
-  <div><h3>Fülle deinen Warenkorb</h3></div>
-  <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div>`
+  return /* html */ `
+  <div>
+    <div><img class="bag-icon" src="./img/icons/bag.png" alt=""></div>
+    <div><h3>Fülle deinen Warenkorb</h3></div>
+    <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div>
+  </div>`
+}
+
+
+function getValueFromInput(inputId) {
+  let input = document.getElementById(inputId);
+  return input.value.trim();
+}
+
+
+function getMenuFromInput() {
+  return getValueFromInput("menu");
+}
+
+
+function getPriceFromInput() {
+  let priceInput = getValueFromInput("price");
+  return parseFloat(priceInput);
+}
+
+
+function onAddMenu() {
+  let menu = getMenuFromInput();
+  let price = getPriceFromInput();
+  let index = getMenuIndex(menu);
+
+  if (index !== "error") {
+    menuItems[index].amount += 1;
+  } else {
+    menuItems.push({ menu, price, amount: 1 });
+  }
+}
+
+
+function getMenuIndex(menu) {
+  for (let i = 0; i < menuItems.length; i++) {
+    if (menuItems[i].menu === menu) {
+      return i;
+    }
+  }
+  return "error";
 }
