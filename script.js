@@ -3,6 +3,7 @@ let menuItems = [
     menu: "Rindfleisch Momos (8 Stück)",
     description: "Handgemachte Tibetische Teigtaschen mit 100% Schweizer Rindfleisch - Füllung nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
+    basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
     price: 22.50,
     amount: 1,
   },
@@ -10,6 +11,7 @@ let menuItems = [
     menu: "Poulet Momos (8 Stück)",
     description: "Handgemachte Tibetische Teigtaschen mit einer Füllung aus Schweizer Poulet, Lauch und Erbsen nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
+    basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
     price: 22.50,
     amount: 1,
   },
@@ -17,6 +19,7 @@ let menuItems = [
     menu: "Vegi Momos (8 Stück)",
     description: "Handgemachte Tibetische Teigtaschen mit saisonaler Gemüse - Paneer - Füllung nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
+    basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
     price: 22.50,
     amount: 1,
   },
@@ -24,6 +27,7 @@ let menuItems = [
     menu: "Vegan Momos (8 Stück)",
     description: "Handgemachte Tibetische Teigtaschen mit saisonaler Gemüse - Füllung nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
+    basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
     price: 22.50,
     amount: 1,
   },
@@ -31,12 +35,14 @@ let menuItems = [
     menu: "Mochi's (5 Stück)",
     description: "Ein japanischer Reiskuchen, der aus gekochtem Mochi-Gome, eine süßliche Reissorte hergestellt wird.",
     description2: "Wahl aus: Kleine Portion (3 Stück), Normale Portion (5 Stück), Grosse Portion (8 Stück).",
+    basketdesc: "Mittlere Portion (5 Stück)",
     price: 15.00,
     amount: 1,
   },
   { menu: "Coca-Cola 1,5L",
-    description: 'Coca-Cola ist ein weltweit bekanntes Erfrischungsgetränk mit kohlensäurehaltigem und süßem Geschmack.', 
-    description2: 'Wahl aus: klein (330cl), mittel (5dl), gross (1.5l).', 
+    description: 'Coca-Cola ist ein weltweit bekanntes Erfrischungsgetränk mit kohlensäurehaltigem und süßem Geschmack.',
+    description2: 'Wahl aus: klein (330cl), mittel (5dl), gross (1.5l).',
+    basketdesc: "Gross 1,5L",
     price: 7.00, 
     amount: 1 },
 ];
@@ -73,7 +79,6 @@ function renderBasket() {
 function checkBasket() {
   let basketContent = document.getElementById("basket");
   
-
   if (basketItems == '') {
     basketContent.innerHTML = "";
     basketContent.innerHTML += emptyBasketTemplate();
@@ -86,7 +91,35 @@ function checkBasket() {
 
 
 function addToBasket(i) {
-  basketItems.push(menuItems[i])
+  let index = getBasketIndex(menuItems[i]['menu'])
+
+  if (index !== "error") {
+    basketItems[index]['amount'] += 1;
+  } else {
+    basketItems.push(menuItems[i])
+  }
+  checkBasket();
+}
+
+
+function getBasketIndex(menu) {
+  for (let j = 0; j < basketItems.length; j++) {
+    if (basketItems[j]['menu'] === menu) {
+      return j;
+    }
+  }
+  return "error";
+}
+
+
+function increaseAmount(i) {
+  basketItems[i]['amount'] += 1;
+  checkBasket();
+}
+
+
+function decreaseAmount(i) {
+  basketItems[i]['amount'] -= 1; //If statement == 0 löschen
   checkBasket();
 }
 
@@ -132,8 +165,8 @@ function basketCardTemplate(index, BASKET) {
   return /* html */`
   <div class="basket-card" id="basketcard${index}">
     <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price']}</span></div></div>
-    <div class="basket-description"><span>Kleine Portion (5 Stück), Hausgemachte Chilisauce</span></div>
-    <div class="card-buttons-div"><button><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>1</span><button><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
+    <div class="basket-description"><span>${BASKET['basketdesc']}</span></div>
+    <div class="card-buttons-div"><button onclick="decreaseAmount(${index})"><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>1</span><button onclick="increaseAmount(${index})"><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
   </div>`
 }
 
@@ -141,11 +174,11 @@ function basketCardTemplate(index, BASKET) {
 function basketTemplate() {
   return /* html */ `
   <div class="basket-cards" id="basketcards">
-      <div class="basket-card" id="basketcard">
+      <div class="basket-card-div" id="basketcard">
           
       </div>
   </div>
-  <div class="basket-sums">
+  <div class="basket-sums" id="basket-sums">
       <div><span>Zwischensumme</span><span>40,00 CHF</span></div>
       <div><span>Lieferkosten</span><span>5,90 CHF</span></div>
       <div><p>Gesamt</p><p>182,50 CHF</p></div>
@@ -194,11 +227,3 @@ function onAddMenu() {
 }
 
 
-function getMenuIndex(menu) {
-  for (let i = 0; i < menuItems.length; i++) {
-    if (menuItems[i].menu === menu) {
-      return i;
-    }
-  }
-  return "error";
-}
