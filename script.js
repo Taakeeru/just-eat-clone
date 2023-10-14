@@ -49,9 +49,9 @@ let menuItems = [
 
 let basketItems = [];
 const SHIPPING = 5.9;
+load();
 
 
-// if amount > 0 add d-none(+) img render amount else remove d-none(+)
 function renderMenu() {
   let cardContent = document.getElementById("cards");
   cardContent.innerHTML = "";
@@ -94,11 +94,12 @@ function addToBasket(i) {
   let index = getBasketIndex(menuItems[i]['menu'])
 
   if (index !== "error") {
-    basketItems[index]['amount'] += 1;
+    increaseAmount(index)
   } else {
     basketItems.push(menuItems[i])
   }
   checkBasket();
+  save();
 }
 
 
@@ -114,13 +115,31 @@ function getBasketIndex(menu) {
 
 function increaseAmount(i) {
   basketItems[i]['amount'] += 1;
+  increasePrice(i);
   checkBasket();
+  save();
+}
+
+
+function increasePrice(i) {
+  basketItems[i]['price'] = (basketItems[i]['price'] / (basketItems[i]['amount'] - 1)) * basketItems[i]['amount'];
 }
 
 
 function decreaseAmount(i) {
-  basketItems[i]['amount'] -= 1; //If statement == 0 löschen
+  if (basketItems[i]['amount'] > 1) {
+    basketItems[i]['amount'] -= 1;
+    decreasePrice(i);
+  } else {
+    basketItems.splice(i, 1);
+  }
   checkBasket();
+  save();
+}
+
+
+function decreasePrice(i) {
+  basketItems[i]['price'] = (basketItems[i]['price'] / (basketItems[i]['amount'] + 1)) * basketItems[i]['amount'];
 }
 
 
@@ -164,9 +183,9 @@ function menuTemplate(index, MENU) {
 function basketCardTemplate(index, BASKET) {
   return /* html */`
   <div class="basket-card" id="basketcard${index}">
-    <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price']}</span></div></div>
+    <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price']} CHF</span></div></div>
     <div class="basket-description"><span>${BASKET['basketdesc']}</span></div>
-    <div class="card-buttons-div"><button onclick="decreaseAmount(${index})"><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>1</span><button onclick="increaseAmount(${index})"><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
+    <div class="card-buttons-div"><button onclick="decreaseAmount(${index})"><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>${BASKET['amount']}</span><button onclick="increaseAmount(${index})"><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
   </div>`
 }
 
@@ -180,7 +199,7 @@ function basketTemplate() {
   </div>
   <div class="basket-sums" id="basket-sums">
       <div><span>Zwischensumme</span><span>40,00 CHF</span></div>
-      <div><span>Lieferkosten</span><span>5,90 CHF</span></div>
+      <div><span>Lieferkosten</span><span>${SHIPPING} CHF</span></div>
       <div><p>Gesamt</p><p>182,50 CHF</p></div>
   </div>
   <div class="basket-button-div"><button class="basket-button" id="basketbutton">Bezahlen (182,50 CHF)</button></div>`
