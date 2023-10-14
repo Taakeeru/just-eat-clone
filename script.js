@@ -98,6 +98,7 @@ function addToBasket(i) {
   } else {
     basketItems.push(menuItems[i])
   }
+  getTotal();
   checkBasket();
   save();
 }
@@ -116,6 +117,7 @@ function getBasketIndex(menu) {
 function increaseAmount(i) {
   basketItems[i]['amount'] += 1;
   increasePrice(i);
+  getTotal();
   checkBasket();
   save();
 }
@@ -133,6 +135,7 @@ function decreaseAmount(i) {
   } else {
     basketItems.splice(i, 1);
   }
+  getTotal();
   checkBasket();
   save();
 }
@@ -140,6 +143,24 @@ function decreaseAmount(i) {
 
 function decreasePrice(i) {
   basketItems[i]['price'] = (basketItems[i]['price'] / (basketItems[i]['amount'] + 1)) * basketItems[i]['amount'];
+}
+
+
+function getSubtotal() {
+  let subtotal = 0;
+  for (let i = 0; i < basketItems.length; i++) {
+    subtotal += basketItems[i]['price'];
+  }
+  return subtotal.toFixed(2);
+}
+
+
+function getTotal() {
+  const subtotal = parseFloat(getSubtotal());
+  const total = subtotal + SHIPPING;
+  document.getElementById('subtotal').innerHTML += subtotal.toFixed(2) + " CHF";
+  document.getElementById('total').innerHTML += total.toFixed(2) + " CHF";
+  document.getElementById('total2').innerHTML += "Bezahlen (" + total.toFixed(2) + " CHF)";
 }
 
 
@@ -198,17 +219,17 @@ function basketTemplate() {
       </div>
   </div>
   <div class="basket-sums" id="basket-sums">
-      <div><span>Zwischensumme</span><span>40,00 CHF</span></div>
+      <div><span>Zwischensumme</span><span id="subtotal">40,00 CHF</span></div>
       <div><span>Lieferkosten</span><span>${SHIPPING} CHF</span></div>
-      <div><p>Gesamt</p><p>182,50 CHF</p></div>
+      <div><p>Gesamt</p><p id="total">182,50 CHF</p></div>
   </div>
-  <div class="basket-button-div"><button class="basket-button" id="basketbutton">Bezahlen (182,50 CHF)</button></div>`
+  <div class="basket-button-div"><button class="basket-button" id="total2">Bezahlen (182,50 CHF)</button></div>`
 }
 
 
 function emptyBasketTemplate() {
   return /* html */ `
-  <div>
+  <div class="empty-basket">
     <div><img class="bag-icon" src="./img/icons/bag.png" alt=""></div>
     <div><h3>Fülle deinen Warenkorb</h3></div>
     <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div>
