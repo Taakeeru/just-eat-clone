@@ -1,6 +1,6 @@
 let menuItems = [
   {
-    menu: "Rindfleisch Momos (8 Stück)",
+    menu: "Rindfleisch Momos",
     description: "Handgemachte Tibetische Teigtaschen mit 100% Schweizer Rindfleisch - Füllung nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
     basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
@@ -8,7 +8,7 @@ let menuItems = [
     amount: 1,
   },
   {
-    menu: "Poulet Momos (8 Stück)",
+    menu: "Poulet Momos",
     description: "Handgemachte Tibetische Teigtaschen mit einer Füllung aus Schweizer Poulet, Lauch und Erbsen nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
     basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
@@ -16,7 +16,7 @@ let menuItems = [
     amount: 1,
   },
   {
-    menu: "Vegi Momos (8 Stück)",
+    menu: "Vegi Momos",
     description: "Handgemachte Tibetische Teigtaschen mit saisonaler Gemüse - Paneer - Füllung nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
     basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
@@ -24,7 +24,7 @@ let menuItems = [
     amount: 1,
   },
   {
-    menu: "Vegan Momos (8 Stück)",
+    menu: "Vegan Momos",
     description: "Handgemachte Tibetische Teigtaschen mit saisonaler Gemüse - Füllung nach eigenem Geheimrezept",
     description2: "Wahl aus: Kleine Portion (5 Stück), Normale Portion (8 Stück), Grosse Portion (12 Stück), Partymix (40 Stück), Sehr grosse Portion (20 Stück) und mehr.",
     basketdesc: "Mittlere Portion (8 Stück), Hausgemachte Chilisauce",
@@ -32,7 +32,7 @@ let menuItems = [
     amount: 1,
   },
   {
-    menu: "Mochi's (5 Stück)",
+    menu: "Mochi's",
     description: "Ein japanischer Reiskuchen, der aus gekochtem Mochi-Gome, eine süßliche Reissorte hergestellt wird.",
     description2: "Wahl aus: Kleine Portion (3 Stück), Normale Portion (5 Stück), Grosse Portion (8 Stück).",
     basketdesc: "Mittlere Portion (5 Stück)",
@@ -82,6 +82,7 @@ function checkBasket() {
   if (basketItems == '') {
     basketContent.innerHTML = "";
     basketContent.innerHTML += emptyBasketTemplate();
+    basketItems = [];
   } else {
     basketContent.innerHTML = "";
     basketContent.innerHTML += basketTemplate();
@@ -98,7 +99,8 @@ function addToBasket(i) {
   if (index !== "error") {
     increaseAmount(index)
   } else {
-    basketItems.push(menuItems[i])
+    let basketItem = { ...menuItems[i] };
+    basketItems.push(basketItem);
   }
   checkBasket();
   save();
@@ -132,6 +134,7 @@ function decreaseAmount(i) {
   if (basketItems[i]['amount'] > 1) {
     basketItems[i]['amount'] -= 1;
     decreasePrice(i);
+    save();
   } else {
     basketItems.splice(i, 1);
   }
@@ -234,35 +237,3 @@ function emptyBasketTemplate() {
     <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div>
   </div>`
 }
-
-
-function getValueFromInput(inputId) {
-  let input = document.getElementById(inputId);
-  return input.value.trim();
-}
-
-
-function getMenuFromInput() {
-  return getValueFromInput("menu");
-}
-
-
-function getPriceFromInput() {
-  let priceInput = getValueFromInput("price");
-  return parseFloat(priceInput);
-}
-
-
-function onAddMenu() {
-  let menu = getMenuFromInput();
-  let price = getPriceFromInput();
-  let index = getMenuIndex(menu);
-
-  if (index !== "error") {
-    menuItems[index].amount += 1;
-  } else {
-    menuItems.push({ menu, price, amount: 1 });
-  }
-}
-
-
