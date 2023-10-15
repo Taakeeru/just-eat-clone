@@ -13,7 +13,7 @@
 <body onload="renderMenu(); checkBasket()">
     <header>
         <div><a href="#"><img src="./img/icons/logo.svg" alt="Logo Bild"><h1>Just Eat</h1></a></div>
-        <div><span>Speisekarte</span></div>
+        <div id="header-title"><span>Speisekarte</span></div>
         <div class="header-icons"><img src="./img/icons/swiss.png" alt="Sprache Bild"><img class="resize" src="./img/seck.jpg" alt="Profil Bild"><img src="./img/icons/menu.svg" alt="Menü Bild"></div>
     </header>
 
@@ -22,7 +22,7 @@
         <div class="info-box">
             <div class="logo-box"><img class="r-logo" src="./img/icons/logo-momo.png" alt="Restaurant Logo"></div>
             <div><h2>House of Momos</h2></div>
-            <div><img src="./img/bewertung.PNG" alt="Bewertungen Bild"></div>
+            <div><img id="img-hover" src="./img/bewertung.PNG" alt="Bewertungen Bild"></div>
             <div class="info-box-text"><span>Bei diesem Restaurant kannst du Stempel sammeln. Stelle beim Bestellabschluss bitte sicher, dass du dich für unseren Newsletter angemeldet hast, um<br>deine Stempel per E-Mail zu erhalten.</span></div>
             <div class="info-box-text"><span>Fleischdeklaration:<br>Poulet: Schweiz<br>Rind: Schweiz</span></div>
         </div>
@@ -67,36 +67,15 @@
         </div>
     </section>
     
-    <section class="basket-container">
+    <section class="basket-container" id="basket-container">
         <div><h2>Warenkorb</h2></div>
         <div class="basket-content" id="basket">
-            <!-- <div><img class="bag-icon" src="./img/icons/bag.png" alt="Warenkorb Bild"></div>
-            <div><h3>Fülle deinen Warenkorb</h3></div>
-            <div class="basket-text"><span>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</span></div> -->
+            
         </div>
     </section>
-    <!-- <section class="basket-container" id="basket">
-        <div><h2>Warenkorb</h2></div>
-        <div class="basket-cards" id="basketcards">
-            <div class="basket-card" id="basketcard">
-               <div class="card-title-row"><div class="card-amount"><p>1</p></div><div class="card-menu-price"><p>Vegi Momos</p><span>20.00</span></div></div>
-               <div class="basket-description"><span>Kleine Portion (5 Stück), Hausgemachte Chilisauce</span></div>
-               <div class="card-buttons-div"><button><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>1</span><button><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
-            </div>
-            <div class="basket-card" id="basketcard">
-               <div class="card-title-row"><div class="card-amount"><p>1</p></div><div class="card-menu-price"><p>Rindfleisch Momos</p><span>20.00</span></div></div>
-               <div class="basket-description"><span>Kleine Portion (5 Stück), Hausgemachte Chilisauce</span></div>
-               <div class="card-buttons-div"><button><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>1</span><button><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
-            </div>
-        </div>
-        <div class="basket-sums">
-            <div><span>Zwischensumme</span><span>40,00 CHF</span></div>
-            <div><span>Lieferkosten</span><span>5,90 CHF</span></div>
-            <div><p>Gesamt</p><p>182,50 CHF</p></div>
-        </div>
-        <div class="basket-button-div"><button class="basket-button" id="basketbutton">Bezahlen (182,50 CHF)</button></div>
-    </section> -->
-
+    <section class="basket-container2">
+        <button class="rp-button" id="rp-button" onclick="showBasket()"><img src="./img/icons/bag-white.png" alt="Korb Bild"><span>Warenkorb (80,50 CHF)</span></button>
+    </section>
 </body>
 </html>
 

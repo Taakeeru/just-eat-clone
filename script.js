@@ -107,6 +107,18 @@ function addToBasket(i) {
 }
 
 
+function showBasket() {
+  let basketContainer = document.getElementById('basket-container');
+
+  basketContainer.classList += 'flex';
+}
+
+
+function removeBasket() {
+
+}
+
+
 function getBasketIndex(menu) {
   for (let j = 0; j < basketItems.length; j++) {
     if (basketItems[j]['menu'] === menu) {

@@ -3,6 +3,10 @@ body {
     margin: 0;
     font-family: "Poppins", sans-serif;
 }
+
+.flex {
+    display: flex;
+}
 /* border: 1px solid rgba(0, 0, 0, 0.2); */
 /* END of Main-Settings */
 
@@ -86,7 +90,10 @@ header span {
     width: 100%;
     object-fit: cover;
     object-position: center;
-    
+}
+
+#img-hover:hover {
+    cursor: pointer;
 }
 
 .info-box {
@@ -187,6 +194,14 @@ header span {
     min-height: 200vh;
     background-color: white;
     padding: 65px 20px;
+}
+
+.basket-container2 {
+    display: none;
+}
+
+.basket-content {
+    width: 100%;
 }
 
 .bag-icon {
@@ -316,3 +331,66 @@ header span {
     background-color: rgb(251,140,0);
 }
 /* END of Basket-Container(JavaScript) */
+
+@media (max-width: 1150px) {
+    .basket-container {
+        display: none;
+    }
+
+    .hero-container {
+        padding-right: 0;
+    }
+
+    .content-container {
+        padding-right: 0;
+        padding-bottom: 75px;
+    }
+
+    .basket-container2 {
+        display: flex;
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 85px;
+        background-color: white;
+        border-top: 1px solid rgba(0, 0, 0, 0.158);
+    }
+
+    .rp-button {
+        background-color: rgb(243,104,5);
+        color: white;
+        height: 50px;
+        width: 100%;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 10px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .rp-button:hover {
+        cursor: pointer;
+        background-color: rgb(251,140,0);
+    }
+
+    .rp-button img {
+        height: 30px;
+        width: 30px;
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero-container {
+        height: 700px;
+    }
+
+    #header-title {
+        display: none;
+    }
+}
