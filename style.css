@@ -62,7 +62,7 @@ header span {
 
 /* START of Hero-Container */
 .hero-container {
-    height: 50vh;
+    height: 640px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -181,9 +181,10 @@ header span {
     position: fixed;
     z-index: 98;
     top: 0;
+    bottom: 0;
     right: 0;
     width: 330px;
-    min-height: 100vh;
+    min-height: 200vh;
     background-color: white;
     padding: 65px 20px;
 }

@@ -48,7 +48,7 @@ let menuItems = [
 ];
 
 let basketItems = [];
-const SHIPPING = 5.9;
+const SHIPPING = 5.90;
 load();
 
 
@@ -85,8 +85,10 @@ function checkBasket() {
   } else {
     basketContent.innerHTML = "";
     basketContent.innerHTML += basketTemplate();
+    getTotal();
   }
   renderBasket();
+  save();
 }
 
 
@@ -98,7 +100,6 @@ function addToBasket(i) {
   } else {
     basketItems.push(menuItems[i])
   }
-  getTotal();
   checkBasket();
   save();
 }
@@ -117,7 +118,6 @@ function getBasketIndex(menu) {
 function increaseAmount(i) {
   basketItems[i]['amount'] += 1;
   increasePrice(i);
-  getTotal();
   checkBasket();
   save();
 }
@@ -135,7 +135,6 @@ function decreaseAmount(i) {
   } else {
     basketItems.splice(i, 1);
   }
-  getTotal();
   checkBasket();
   save();
 }
@@ -158,9 +157,9 @@ function getSubtotal() {
 function getTotal() {
   const subtotal = parseFloat(getSubtotal());
   const total = subtotal + SHIPPING;
-  document.getElementById('subtotal').innerHTML += subtotal.toFixed(2) + " CHF";
-  document.getElementById('total').innerHTML += total.toFixed(2) + " CHF";
-  document.getElementById('total2').innerHTML += "Bezahlen (" + total.toFixed(2) + " CHF)";
+  document.getElementById('subtotal').textContent = subtotal.toFixed(2) + " CHF";
+  document.getElementById('total').textContent = total.toFixed(2) + " CHF";
+  document.getElementById('total2').textContent = "Bezahlen (" + total.toFixed(2) + " CHF)";
 }
 
 
@@ -192,7 +191,7 @@ function menuTemplate(index, MENU) {
       <div><h3>${MENU['menu']}</h3></div>
       <div><span>${MENU['description']}</span></div>
       <div><p>${MENU['description2']}</p></div>
-      <div><h4>${MENU['price']} CHF</h4></div>
+      <div><h4>${MENU['price'].toFixed(2)} CHF</h4></div>
   </div>
   <div class="card-button">
       <div><button id="card-button${index}"><img src="./img/icons/plus.png" alt="Plus Icon"></button></div>
@@ -204,7 +203,7 @@ function menuTemplate(index, MENU) {
 function basketCardTemplate(index, BASKET) {
   return /* html */`
   <div class="basket-card" id="basketcard${index}">
-    <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price']} CHF</span></div></div>
+    <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price'].toFixed(2)} CHF</span></div></div>
     <div class="basket-description"><span>${BASKET['basketdesc']}</span></div>
     <div class="card-buttons-div"><button onclick="decreaseAmount(${index})"><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>${BASKET['amount']}</span><button onclick="increaseAmount(${index})"><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
   </div>`
@@ -220,7 +219,7 @@ function basketTemplate() {
   </div>
   <div class="basket-sums" id="basket-sums">
       <div><span>Zwischensumme</span><span id="subtotal">40,00 CHF</span></div>
-      <div><span>Lieferkosten</span><span>${SHIPPING} CHF</span></div>
+      <div><span>Lieferkosten</span><span>${SHIPPING.toFixed(2)} CHF</span></div>
       <div><p>Gesamt</p><p id="total">182,50 CHF</p></div>
   </div>
   <div class="basket-button-div"><button class="basket-button" id="total2">Bezahlen (182,50 CHF)</button></div>`
