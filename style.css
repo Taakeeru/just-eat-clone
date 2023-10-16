@@ -3,10 +3,6 @@ body {
     margin: 0;
     font-family: "Poppins", sans-serif;
 }
-
-.flex {
-    display: flex;
-}
 /* border: 1px solid rgba(0, 0, 0, 0.2); */
 /* END of Main-Settings */
 
@@ -330,11 +326,57 @@ header span {
     cursor: pointer;
     background-color: rgb(251,140,0);
 }
+
+.remove-button {
+    height: 40px;
+    width: 40px;
+    border: none;
+    background-color: #f1f3f4;
+    border-radius: 20px;
+}
+
+.remove-button:hover {
+    cursor: pointer;
+    background-color: #f9fcfd;
+}
+
+.remove-button img {
+    height: 20px;
+    width: 20px;
+}
+
+.heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.rp-basket {
+    display: none;
+}
 /* END of Basket-Container(JavaScript) */
 
 @media (max-width: 1150px) {
     .basket-container {
         display: none;
+    }
+    .rp-basket {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+        0 2px 6px 2px rgba(60, 64, 67, 0.149);
+        position: absolute;
+        z-index: 100;
+        top: 65px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1795px;
+        min-height: 100vh;
+        background-color: white;
+        padding: 5px 20px;
     }
 
     .hero-container {
@@ -355,6 +397,7 @@ header span {
         height: 85px;
         background-color: white;
         border-top: 1px solid rgba(0, 0, 0, 0.158);
+        z-index: 999;
     }
 
     .rp-button {
@@ -382,6 +425,10 @@ header span {
         height: 30px;
         width: 30px;
         margin-right: 10px;
+    }
+
+    .rp-d-none {
+        display: none !important;
     }
 }
 

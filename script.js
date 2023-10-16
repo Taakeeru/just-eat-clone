@@ -66,11 +66,13 @@ function renderMenu() {
 
 function renderBasket() {
   let basketCard = document.getElementById('basketcard');
+  let rpBasketCard = document.getElementById('rp-basketca'); 
   
   for (let i = 0; i < basketItems.length; i++) {
     const BASKET = basketItems[i];
 
     basketCard.innerHTML += basketCardTemplate(i, BASKET);
+    // rpBasketCard.innerHTML += basketCardTemplate(i, BASKET);
     // checkBasket(i, BASKET);
   }
 }
@@ -78,14 +80,20 @@ function renderBasket() {
 
 function checkBasket() {
   let basketContent = document.getElementById("basket");
+  let rpBasketContent = document.getElementById('rp-basket');
   
   if (basketItems == '') {
     basketContent.innerHTML = "";
     basketContent.innerHTML += emptyBasketTemplate();
+    rpBasketContent.innerHTML = "";
+    rpBasketContent.innerHTML += emptyBasketTemplate();
+
     basketItems = [];
   } else {
     basketContent.innerHTML = "";
     basketContent.innerHTML += basketTemplate();
+    rpBasketContent.innerHTML = "";
+    rpBasketContent.innerHTML += basketTemplate();
     getTotal();
   }
   renderBasket();
@@ -108,14 +116,16 @@ function addToBasket(i) {
 
 
 function showBasket() {
-  let basketContainer = document.getElementById('basket-container');
+  let basketContainer = document.getElementById('rp-basket-container');
 
-  basketContainer.classList += 'flex';
+  basketContainer.classList.remove('rp-d-none')
 }
 
 
 function removeBasket() {
+  let basketContainer = document.getElementById('rp-basket-container');
 
+  basketContainer.classList.add('rp-d-none')
 }
 
 
