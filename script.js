@@ -66,14 +66,24 @@ function renderMenu() {
 
 function renderBasket() {
   let basketCard = document.getElementById('basketcard');
-  let rpBasketCard = document.getElementById('rp-basketca'); 
-  
+  basketCard.innerHTML = "";
+
   for (let i = 0; i < basketItems.length; i++) {
     const BASKET = basketItems[i];
 
     basketCard.innerHTML += basketCardTemplate(i, BASKET);
-    // rpBasketCard.innerHTML += basketCardTemplate(i, BASKET);
-    // checkBasket(i, BASKET);
+  }
+}
+
+
+function renderResponsiveBasket() {
+  let rpBasketContent = document.getElementById('rp-basketcard');
+  rpBasketContent.innerHTML = "";
+
+  for (let i = 0; i < basketItems.length; i++) {
+    const BASKET = basketItems[i];
+
+    rpBasketContent.innerHTML += rpBasketCardTemplate(i, BASKET);
   }
 }
 
@@ -81,23 +91,30 @@ function renderBasket() {
 function checkBasket() {
   let basketContent = document.getElementById("basket");
   let rpBasketContent = document.getElementById('rp-basket');
-  
-  if (basketItems == '') {
-    basketContent.innerHTML = "";
-    basketContent.innerHTML += emptyBasketTemplate();
-    rpBasketContent.innerHTML = "";
-    rpBasketContent.innerHTML += emptyBasketTemplate();
+  let rpButton = document.getElementById('rp-button');
 
-    basketItems = [];
+  if (basketItems.length === 0) {
+    basketContent.innerHTML = "";
+    rpBasketContent.innerHTML = "";
+    basketContent.innerHTML += emptyBasketTemplate();
+    rpBasketContent.innerHTML += emptyBasketTemplate();
+    rpButton.innerHTML = /* html */ `<img src="./img/icons/bag-white.png" alt="Korb Bild"><span>Warenkorb (0 CHF)</span>`;
   } else {
     basketContent.innerHTML = "";
-    basketContent.innerHTML += basketTemplate();
     rpBasketContent.innerHTML = "";
-    rpBasketContent.innerHTML += basketTemplate();
+    basketContent.innerHTML += basketTemplate();
+    rpBasketContent.innerHTML += rpBasketTemplate();
     getTotal();
+    updateBaskets();
   }
-  renderBasket();
   save();
+  getTotal();
+}
+
+
+function updateBaskets() {
+  renderBasket();
+  renderResponsiveBasket(); 
 }
 
 
@@ -112,6 +129,7 @@ function addToBasket(i) {
   }
   checkBasket();
   save();
+  updateBaskets();
 }
 
 
@@ -144,6 +162,7 @@ function increaseAmount(i) {
   increasePrice(i);
   checkBasket();
   save();
+  updateBaskets();
 }
 
 
@@ -159,9 +178,11 @@ function decreaseAmount(i) {
     save();
   } else {
     basketItems.splice(i, 1);
+    save();
   }
   checkBasket();
   save();
+  updateBaskets();
 }
 
 
@@ -182,9 +203,13 @@ function getSubtotal() {
 function getTotal() {
   const subtotal = parseFloat(getSubtotal());
   const total = subtotal + SHIPPING;
+  
   document.getElementById('subtotal').textContent = subtotal.toFixed(2) + " CHF";
   document.getElementById('total').textContent = total.toFixed(2) + " CHF";
   document.getElementById('total2').textContent = "Bezahlen (" + total.toFixed(2) + " CHF)";
+  document.getElementById('rp-subtotal').textContent = subtotal.toFixed(2) + " CHF";
+  document.getElementById('rp-total').textContent = total.toFixed(2) + " CHF";
+  document.getElementById('rp-button').innerHTML = /* html */ `<img src="./img/icons/bag-white.png" alt="Korb Bild"><span>Warenkorb (${total.toFixed(2)} CHF)</span>`;
 }
 
 
@@ -235,6 +260,16 @@ function basketCardTemplate(index, BASKET) {
 }
 
 
+function rpBasketCardTemplate(index, BASKET) {
+  return /* html */`
+  <div class="basket-card" id="rp-basketcard${index}">
+    <div class="card-title-row"><div class="card-amount"><p>${BASKET['amount']}</p></div><div class="card-menu-price"><p>${BASKET['menu']}</p><span>${BASKET['price'].toFixed(2)} CHF</span></div></div>
+    <div class="basket-description"><span>${BASKET['basketdesc']}</span></div>
+    <div class="card-buttons-div"><button onclick="decreaseAmount(${index})"><img src="./img/icons/minus.png" alt="Minus Icon"></button><span>${BASKET['amount']}</span><button onclick="increaseAmount(${index})"><img src="./img/icons/plus.png" alt="Plus Icon"></button></div> 
+  </div>`
+}
+
+
 function basketTemplate() {
   return /* html */ `
   <div class="basket-cards" id="basketcards">
@@ -248,6 +283,21 @@ function basketTemplate() {
       <div><p>Gesamt</p><p id="total">182,50 CHF</p></div>
   </div>
   <div class="basket-button-div"><button class="basket-button" id="total2">Bezahlen (182,50 CHF)</button></div>`
+}
+
+
+function rpBasketTemplate() {
+  return /* html */ `
+  <div class="basket-cards" id="rp-basketcards">
+      <div class="basket-card-div" id="rp-basketcard">
+          
+      </div>
+  </div>
+  <div class="basket-sums" id="rp-basket-sums">
+      <div><span>Zwischensumme</span><span id="rp-subtotal">40,00 CHF</span></div>
+      <div><span>Lieferkosten</span><span>${SHIPPING.toFixed(2)} CHF</span></div>
+      <div><p>Gesamt</p><p id="rp-total">182,50 CHF</p></div>
+  </div>`
 }
 
 
