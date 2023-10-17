@@ -66,7 +66,9 @@ function renderMenu() {
 
 function renderBasket() {
   let basketCard = document.getElementById('basketcard');
+  if (basketCard) {
   basketCard.innerHTML = "";
+  }
 
   for (let i = 0; i < basketItems.length; i++) {
     const BASKET = basketItems[i];
@@ -78,7 +80,9 @@ function renderBasket() {
 
 function renderResponsiveBasket() {
   let rpBasketContent = document.getElementById('rp-basketcard');
+  if (rpBasketContent) {
   rpBasketContent.innerHTML = "";
+  }
 
   for (let i = 0; i < basketItems.length; i++) {
     const BASKET = basketItems[i];
@@ -215,15 +219,18 @@ function getSubtotal() {
 
 
 function getTotal() {
+  const subtotalElement = document.getElementById('subtotal');
   const subtotal = parseFloat(getSubtotal());
   const total = subtotal + SHIPPING;
   
+  if (subtotalElement) {
   document.getElementById('subtotal').textContent = subtotal.toFixed(2) + " CHF";
   document.getElementById('total').textContent = total.toFixed(2) + " CHF";
   document.getElementById('total2').textContent = "Bezahlen (" + total.toFixed(2) + " CHF)";
   document.getElementById('rp-subtotal').textContent = subtotal.toFixed(2) + " CHF";
   document.getElementById('rp-total').textContent = total.toFixed(2) + " CHF";
   document.getElementById('rp-button').innerHTML = /* html */ `<img src="./img/icons/bag-white.png" alt="Korb Bild"><span>Warenkorb (${total.toFixed(2)} CHF)</span>`;
+  }
 }
 
 
