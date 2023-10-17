@@ -89,26 +89,40 @@ function renderResponsiveBasket() {
 
 
 function checkBasket() {
-  let basketContent = document.getElementById("basket");
-  let rpBasketContent = document.getElementById('rp-basket');
-  let rpButton = document.getElementById('rp-button');
-
+  
   if (basketItems.length === 0) {
-    basketContent.innerHTML = "";
-    rpBasketContent.innerHTML = "";
-    basketContent.innerHTML += emptyBasketTemplate();
-    rpBasketContent.innerHTML += emptyBasketTemplate();
-    rpButton.innerHTML = /* html */ `<img src="./img/icons/bag-white.png" alt="Korb Bild"><span>Warenkorb (0 CHF)</span>`;
+    ifTemplate();
   } else {
-    basketContent.innerHTML = "";
-    rpBasketContent.innerHTML = "";
-    basketContent.innerHTML += basketTemplate();
-    rpBasketContent.innerHTML += rpBasketTemplate();
+    elseTemplate();
     getTotal();
     updateBaskets();
   }
   save();
   getTotal();
+}
+
+function ifTemplate() {
+  let basketContent = document.getElementById("basket");
+  let rpBasketContent = document.getElementById('rp-basket');
+  let rpButton = document.getElementById('rp-button');
+
+  basketContent.innerHTML = "";
+  rpBasketContent.innerHTML = "";
+  basketContent.innerHTML += emptyBasketTemplate();
+  rpBasketContent.innerHTML += emptyBasketTemplate();
+  rpButton.innerHTML = /* html */ `<img src="./img/icons/bag-white.png" alt="Korb Bild"><span>Warenkorb (0 CHF)</span>`;
+}
+
+
+function elseTemplate() {
+  let basketContent = document.getElementById("basket");
+  let rpBasketContent = document.getElementById('rp-basket');
+  let rpButton = document.getElementById('rp-button');
+
+  basketContent.innerHTML = "";
+  rpBasketContent.innerHTML = "";
+  basketContent.innerHTML += basketTemplate();
+  rpBasketContent.innerHTML += rpBasketTemplate();
 }
 
 
